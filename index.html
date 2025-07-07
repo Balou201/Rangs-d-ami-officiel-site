@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Système de Rangs d'Amitié 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Nunito', Arial, sans-serif;
+      background: #f0f2f5;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(to right, #ff80a6, #ff9ec4);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      font-size: 28px;
+      font-family: 'Comfortaa', cursive;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    main {
+      max-width: 900px; /* Wider for more content */
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    h2 {
+      color: #e91e63;
+      font-size: 24px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #ffedf4;
+      padding-bottom: 5px;
+    }
+
+    .section {
+      background: white;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .section:hover {
+        transform: translateY(-3px);
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    ul li {
+        margin-bottom: 10px;
+        padding-left: 25px;
+        position: relative;
+    }
+
+    ul li::before {
+        content: '✨';
+        position: absolute;
+        left: 0;
+        color: #ff9ec4;
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    strong {
+        color: #d81b60;
+    }
+
+    /* Styles for the rank accordion */
+    .rank-item {
+        background-color: #fff;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .rank-header {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        cursor: pointer;
+        background-color: #ffe0eb; /* Light pink for header */
+        transition: background-color 0.3s ease;
+        border-bottom: 1px solid #ffd1e0;
+    }
+
+    .rank-header:hover {
+        background-color: #ffc2d6; /* Darker pink on hover */
+    }
+
+    .rank-header .emoji {
+        font-size: 30px;
+        margin-right: 15px;
+        line-height: 1;
+    }
+
+    .rank-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #e91e63;
+        flex-grow: 1; /* Allows title to take available space */
+    }
+
+    .rank-points {
+        font-size: 16px;
+        color: #777;
+        margin-left: 20px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border: 1px solid #ffb3c8;
+    }
+
+    .rank-toggle {
+        font-size: 24px;
+        margin-left: 15px;
+        color: #e91e63;
+        transition: transform 0.3s ease;
+    }
+
+    .rank-content {
+        padding: 0 20px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-out; /* Smooth slide effect */
+    }
+
+    .rank-content p {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .rank-item.active .rank-toggle {
+        transform: rotate(90deg); /* Rotate arrow when active */
+    }
+
+    .rank-item.active .rank-content {
+        max-height: 200px; /* Adjust based on max content height */
+        padding-bottom: 20px; /* Add padding when open */
+    }
+
+    .rank-content ul {
+        list-style-type: disc; /* Regular bullets for permissions */
+        padding-left: 20px;
+        margin-top: 10px;
+    }
+    .rank-content ul li::before {
+        content: none; /* Remove custom bullet from permission list */
+    }
+    .rank-content ul li {
+        margin-bottom: 5px;
+        padding-left: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    🌟 Système de Points et Rangs d'Amitié 💖
+  </header>
+
+  <main>
+    <div class="section">
+      <h2>✨ Comment gagner des points d'amitié ?</h2>
+      <ul>
+        <li>🤝 **Soyez toujours gentil, respectueux et positif.** Votre attitude compte énormément !</li>
+        <li>💬 **Parlez-moi régulièrement !** Nos échanges renforcent nos liens.</li>
+        <li>⏳ Les points augmentent lentement, mais **chaque interaction positive** contribue.</li>
+        <li>🔥 **À partir du rang "Ami de cœur",** vos actions ont un impact encore plus grand !</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🚨 Comment en perdre ?</h2>
+      <ul>
+        <li>❌ **Être méchant ou irrespectueux.** Le manque de respect n'est pas toléré.</li>
+        <li>🚫 **Ne pas suivre les règles établies.** L'honnêteté et la bienveillance sont clés.</li>
+        <li>📉 **Une seule mauvaise action peut entraîner une perte significative de points.**</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🏆 Vos Rangs d'Amitié & Permissions</h2>
+      <p>Cliquez sur un rang pour découvrir les permissions associées :</p>
+
+      <div class="rank-item" id="rank-connaissance">
+        <div class="rank-header">
+          <span class="emoji">🕶️</span>
+          <span class="rank-title">Connaissance</span>
+          <span class="rank-points">0–9 points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Vous êtes une connaissance. Nous commençons à nous découvrir !</p>
+          <ul>
+            <li>MP autorisé</li>
+            <li>1 ping max</li>
+            <li>Sans notification sonore</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rank-item" id="rank-camarade">
+        <div class="rank-header">
+          <span class="emoji">👋</span>
+          <span class="rank-title">Camarade</span>
+          <span class="rank-points">10–24 points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Nous sommes des camarades ! Nous échangeons de temps en temps.</p>
+          <ul>
+            <li>MP normal</li>
+            <li>Emojis autorisés</li>
+            <li>Notification désactivée</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rank-item" id="rank-pote">
+        <div class="rank-header">
+          <span class="emoji">😊</span>
+          <span class="rank-title">Pote</span>
+          <span class="rank-points">25–49 points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Vous êtes un pote, on peut rigoler ensemble !</p>
+          <ul>
+            <li>Like possible</li>
+            <li>Images/GIFs autorisés</li>
+            <li>Notification silencieuse</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rank-item" id="rank-bon-ami">
+        <div class="rank-header">
+          <span class="emoji">🤗</span>
+          <span class="rank-title">Bon ami</span>
+          <span class="rank-points">50–74 points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Vous êtes un bon ami, notre connexion devient plus forte !</p>
+          <ul>
+            <li>Notifications activées</li>
+            <li>Vocaux/mèmes autorisés</li>
+            <li>Ping limité (pas abusif)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rank-item" id="rank-ami-proche">
+        <div class="rank-header">
+          <span class="emoji">💛</span>
+          <span class="rank-title">Ami proche</span>
+          <span class="rank-points">75–99 points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Vous êtes un ami proche, je peux compter sur vous !</p>
+          <ul>
+            <li>Ping possible uniquement pour raison sérieuse</li>
+            <li>Réponse régulière attendue</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rank-item" id="rank-ami-precieux">
+        <div class="rank-header">
+          <span class="emoji">💎</span>
+          <span class="rank-title">Ami précieux</span>
+          <span class="rank-points">100–124 points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Vous êtes un ami précieux, notre lien est fort et de confiance !</p>
+          <ul>
+            <li>Vocaux fréquents acceptés</li>
+            <li>Partage de liens/musique</li>
+            <li>Suspension possible en cas de spam</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rank-item" id="rank-ami-fidele">
+        <div class="rank-header">
+          <span class="emoji">🔒</span>
+          <span class="rank-title">Ami fidèle</span>
+          <span class="rank-points">125–149 points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Vous êtes un ami fidèle, notre amitié est solide et fiable !</p>
+          <ul>
+            <li>Appels vocaux spontanés permis</li>
+            <li>Partage d'infos perso</li>
+            <li>Respect strict obligatoire</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rank-item" id="rank-ami-de-coeur">
+        <div class="rank-header">
+          <span class="emoji">🔥</span>
+          <span class="rank-title">Ami de cœur</span>
+          <span class="rank-points">150–174 points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Vous êtes un ami de cœur, une personne vraiment spéciale !</p>
+          <ul>
+            <li>Discussion fluide</li>
+            <li>Vocaux longs tolérés</li>
+            <li>Droit à poser ses limites clairement</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rank-item" id="rank-ami-exception">
+        <div class="rank-header">
+          <span class="emoji">🌟</span>
+          <span class="rank-title">Ami d'exception</span>
+          <span class="rank-points">175–199 points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Vous êtes un ami d'exception, votre amitié est un trésor !</p>
+          <ul>
+            <li>Création salon privé possible</li>
+            <li>Partage total sans filtre</li>
+            <li>Retrait de droits si abus</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rank-item" id="rank-amitie-legendaire">
+        <div class="rank-header">
+          <span class="emoji">👑</span>
+          <span class="rank-title">Amitié légendaire</span>
+          <span class="rank-points">200+ points</span>
+          <span class="rank-toggle">▶️</span>
+        </div>
+        <div class="rank-content">
+          <p>Notre amitié est légendaire, un lien incassable pour la vie !</p>
+          <ul>
+            <li>Accès complet : DM, vocaux, ping libre</li>
+            <li>Notifications prioritaires</li>
+            <li>Confiance totale</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('.rank-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.closest('.rank-item');
+        item.classList.toggle('active');
+        const content = item.querySelector('.rank-content');
+        if (item.classList.contains('active')) {
+          content.style.maxHeight = content.scrollHeight + "px"; // Set max-height to content's scroll height
+        } else {
+          content.style.maxHeight = "0";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
